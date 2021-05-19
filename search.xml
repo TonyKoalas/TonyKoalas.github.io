@@ -3,7 +3,7 @@
   <entry>
     <title>Go-切片</title>
     <url>/2021/05/18/go%E5%9F%BA%E7%A1%80/01%E5%88%87%E7%89%87/</url>
-    <content><![CDATA[<img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fb57c9724cf9167764d0eaf2abc402031.png&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623949493&t=362c1a0f03eb1f6eee0a66d2076fe3fe" width="400px" height="150px" style="border: 0">
+    <content><![CDATA[<img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fb57c9724cf9167764d0eaf2abc402031.png&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623949493&t=362c1a0f03eb1f6eee0a66d2076fe3fe" width="400px" height="150px" style="box-shadow: 0 0 0px">
 
 <ol>
 <li><ul>
@@ -35,7 +35,9 @@
   <entry>
     <title>Go-指针</title>
     <url>/2021/05/18/go%E5%9F%BA%E7%A1%80/02%E6%8C%87%E9%92%88/</url>
-    <content><![CDATA[<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><ol>
+    <content><![CDATA[<img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fb57c9724cf9167764d0eaf2abc402031.png&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623949493&t=362c1a0f03eb1f6eee0a66d2076fe3fe" width="400px" height="150px" style="box-shadow: 0 0 0px">
+
+<ol>
 <li>变量、指针地址、指针变量、取地址、取值的相互关系：<ul>
 <li>对变量进行取地址（&amp;）操作，可以获得这个变量的指针变量</li>
 <li>指针变量的值是指针地址</li>
@@ -59,11 +61,13 @@
   <entry>
     <title>Go-闭包</title>
     <url>/2021/05/18/go%E5%9F%BA%E7%A1%80/03%E9%97%AD%E5%8C%85/</url>
-    <content><![CDATA[<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><ol>
-<li>闭包是什么？<figure class="highlight"><table><tr><td class="code"><pre><code class="hljs">闭包是一个函数，这个函数包含了他外部作用域的一个变量<br></code></pre></td></tr></table></figure></li>
-<li>demo:<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">adder</span><span class="hljs-params">(x <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(y <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>		x += y<br>		<span class="hljs-keyword">return</span> x<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>  &#123;<br>	ret := adder(<span class="hljs-number">100</span>)<br>	ret2 := ret(<span class="hljs-number">200</span>)<br>	fmt.Println(ret2)<br>&#125;<br></code></pre></td></tr></table></figure></li>
-<li>底层原理：<figure class="highlight markdown"><table><tr><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 函数可以作为返回值<br><span class="hljs-bullet">2.</span> 函数内部查找变量的顺序，先在自己内部找，找不到往外层找<br></code></pre></td></tr></table></figure></li>
-</ol>
+    <content><![CDATA[<img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fb57c9724cf9167764d0eaf2abc402031.png&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623949493&t=362c1a0f03eb1f6eee0a66d2076fe3fe" width="400px" height="150px" style="box-shadow: 0 0 0px">
+1. 闭包是什么？
+<figure class="highlight"><table><tr><td class="code"><pre><code class="hljs">闭包是一个函数，这个函数包含了他外部作用域的一个变量<br></code></pre></td></tr></table></figure>
+2. demo:
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">adder</span><span class="hljs-params">(x <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(y <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>		x += y<br>		<span class="hljs-keyword">return</span> x<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>  &#123;<br>	ret := adder(<span class="hljs-number">100</span>)<br>	ret2 := ret(<span class="hljs-number">200</span>)<br>	fmt.Println(ret2)<br>&#125;<br></code></pre></td></tr></table></figure>
+3. 底层原理：
+<figure class="highlight markdown"><table><tr><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 函数可以作为返回值<br><span class="hljs-bullet">2.</span> 函数内部查找变量的顺序，先在自己内部找，找不到往外层找<br></code></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Go基础</category>

@@ -21,7 +21,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true},"style":{"primary_color":"#FFFFFF","avatar":"/images/微信头像.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"🌈 IDEAS MATTER  🌈"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.3"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true},"style":{"primary_color":"#FFFFFF","avatar":"/images/微信头像.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"🌈 IDEAS MATTER  🌈"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.3"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
   </script>
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Tony威" type="application/atom+xml">
@@ -217,9 +217,11 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        闭包
-闭包是什么？闭包是一个函数，这个函数包含了他外部作用域的一个变量
-demo:func adder(x int) func(int) int &#123;	return func(y int) int &#123;		x += y		return...
+                        
+1. 闭包是什么？
+闭包是一个函数，这个函数包含了他外部作用域的一个变量
+2. demo:
+func adder(x int) func(int) int &#123;	return func(y int) int &#123;		x += y		...
                     
                 </div>
 
@@ -271,7 +273,9 @@ demo:func adder(x int) func(int) int &#123;	return func(y int) int &#123;		x += 
 
                 <div class="home-article-content markdown-body">
                     
-                        指针
+                        
+
+
 变量、指针地址、指针变量、取地址、取值的相互关系：
 对变量进行取地址（&amp;）操作，可以获得这个变量的指针变量
 指针变量的值是指针地址
