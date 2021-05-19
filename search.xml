@@ -3,7 +3,9 @@
   <entry>
     <title>Go-切片</title>
     <url>/2021/05/18/go%E5%9F%BA%E7%A1%80/01%E5%88%87%E7%89%87/</url>
-    <content><![CDATA[<h2 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h2><ol>
+    <content><![CDATA[<img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimages.yanyiwu.com%2Fgolang.jpg&refer=http%3A%2F%2Fimages.yanyiwu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623949513&t=7e1d210d3a94ae918772a7353bc91974" width="100px" height="100px">
+
+<ol>
 <li><ul>
 <li>切片不保存具体的值，</li>
 <li>切片对应一个底层数组</li>
@@ -27,7 +29,7 @@
         <category>Go基础</category>
       </categories>
       <tags>
-        <tag>Go基础</tag>
+        <tag>Go</tag>
       </tags>
   </entry>
   <entry>
@@ -51,7 +53,7 @@
         <category>Go基础</category>
       </categories>
       <tags>
-        <tag>Go基础</tag>
+        <tag>Go</tag>
       </tags>
   </entry>
   <entry>
@@ -67,7 +69,7 @@
         <category>Go基础</category>
       </categories>
       <tags>
-        <tag>Go基础</tag>
+        <tag>Go</tag>
       </tags>
   </entry>
 </search>
