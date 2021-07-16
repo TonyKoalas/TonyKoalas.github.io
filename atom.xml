@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-31T11:24:29.000Z</updated>
+  <updated>2021-07-16T09:55:05.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redis Sentinel-哨兵模式</title>
+    <link href="http://example.com/2021/07/16/Redis/Redis%20Sentinel/"/>
+    <id>http://example.com/2021/07/16/Redis/Redis%20Sentinel/</id>
+    <published>2021-07-16T09:54:36.000Z</published>
+    <updated>2021-07-16T09:55:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>架构图<br>1master 2 slaves<br>3sentinels</li><li>主观下线(Subjectively Down简称S_DOWN)</li><li>客观下线(Objectively Down简称O_DOWN)</li><li>quorum：确认odown的最少的哨兵数量</li><li>majority：授权进行主从切换(failover)的最少的哨兵数量<ul><li>   2个哨兵的majority=2，3个哨兵的majority=2，4个哨兵的majority=2，5个哨兵的majority=3)</li><li>   当quorum&lt;majority时，quorum确定odown，majority确定failover</li><li>   当quorum&gt;=majority时,quorum确定odown和failover</li><li>   sentinels的存活数一定要大于等于配置的quorum</li></ul></li><li>故障迁移（failover）</li><li>哨兵模式无法工作的情况：<ul><li>sentinel无法选举出master: 要满足sentinels的存活数大于等于配置的quorum</li><li>master，slave都down了</li></ul></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;架构图&lt;br&gt;1master 2 slaves&lt;br&gt;3sentinels&lt;/li&gt;
+&lt;li&gt;主观下线(Subjectively Down简称S_DOWN)&lt;/li&gt;
+&lt;li&gt;客观下线(Objectively Down简称O_DOWN)&lt;/li&gt;
+&lt;li&gt;quo</summary>
+      
+    
+    
+    
+    <category term="Redis" scheme="http://example.com/categories/Redis/"/>
+    
+    
+    <category term="Redis" scheme="http://example.com/tags/Redis/"/>
+    
+  </entry>
   
   <entry>
     <title>Go-struct</title>
