@@ -199,7 +199,7 @@
     <url>/2021/07/16/Redis/Redis-Sentinel%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<ol>
 <li><p>架构图<br>![/images/RedisSentinels.jpg]</p>
-</li>
+<img src="/images/RedisSentinels.jpg"></li>
 <li><p>几个关键概念</p>
 <ul>
 <li>主观下线(Subjectively Down)：简称S_DOWN；</li>
