@@ -9,7 +9,7 @@
     
     <title>
         
-            Go-interface |
+            Redis Sentinel-哨兵模式 |
         
         Tony&#39;s Blog
     </title>
@@ -164,7 +164,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Go-interface</span>
+            <span class="title-hover-animation">Redis Sentinel-哨兵模式</span>
         </div>
 
         
@@ -180,7 +180,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-07-16 17:37:36
+        <i class="fas fa-edit"></i>&nbsp;2021-07-16 17:54:36
     </span>
     
         <span class="article-categories article-meta-item">
@@ -188,7 +188,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/Go%E5%9F%BA%E7%A1%80/">Go基础</a>&nbsp;
+                        <a href="/categories/Redis/">Redis</a>&nbsp;
                     </li>
                 
             </ul>
@@ -200,7 +200,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Go/">Go</a>&nbsp;
+                        <a href="/tags/Redis/">Redis</a>&nbsp;
                     </li>
                 
             </ul>
@@ -223,20 +223,47 @@
         
 
         <div class="article-content markdown-body">
-            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fb57c9724cf9167764d0eaf2abc402031.png&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623949493&t=362c1a0f03eb1f6eee0a66d2076fe3fe" width="400px" height="150px" style="box-shadow: 0 0 0px">
-
-<ol>
-<li>接口的定义<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">type</span> <span class="hljs-type">接口名 </span><span class="hljs-keyword">interface</span> &#123;<br>    方法名<span class="hljs-number">1</span>（参数）（返回值）<br>    方法名<span class="hljs-number">2</span>（参数）（返回值）<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure></li>
-<li>接口的实现<figure class="highlight"><table><tr><td class="code"><pre><code class="hljs">一个变量如果实现了接口中规定的所有方法，那么这个变量就实现了这个接口，可以称为这个接口类型的变量<br></code></pre></td></tr></table></figure></li>
-<li>Demo<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> animal <span class="hljs-keyword">interface</span> &#123;<br>    speak()<br>    eat(<span class="hljs-keyword">string</span>)<br>    <br>&#125;<br><br><span class="hljs-keyword">type</span> cat <span class="hljs-keyword">struct</span> &#123;<br><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c cat)</span> <span class="hljs-title">speak</span><span class="hljs-params">()</span></span>  &#123;<br>    fmt.Println(<span class="hljs-string">&quot;喵喵喵&quot;</span>)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c cat)</span> <span class="hljs-title">eat</span><span class="hljs-params">(s <span class="hljs-keyword">string</span>)</span></span>  &#123;<br>    fmt.Println(<span class="hljs-string">&quot;猫吃&quot;</span> + s)<br>&#125;<br><br><span class="hljs-keyword">type</span> dog <span class="hljs-keyword">struct</span> &#123;<br><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d dog)</span> <span class="hljs-title">speak</span><span class="hljs-params">()</span></span>  &#123;<br>    fmt.Println(<span class="hljs-string">&quot;汪汪汪&quot;</span>)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d dog)</span> <span class="hljs-title">eat</span><span class="hljs-params">(s <span class="hljs-keyword">string</span>)</span></span>  &#123;<br>    fmt.Println(<span class="hljs-string">&quot;狗吃&quot;</span> + s)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>  &#123;<br>    <span class="hljs-keyword">var</span> a animal<br>    c := cat&#123;&#125;<br>    a=c<br>    a.eat(<span class="hljs-string">&quot;fish&quot;</span>)<br>    a.speak()<br>    <br>    d := dog&#123;&#125;<br>    d.eat(<span class="hljs-string">&quot;chicken&quot;</span>)<br>    d.speak()<br>&#125;<br></code></pre></td></tr></table></figure></li>
-<li>使用值接收者实现接口与使用指针接收者实现接口的区别<figure class="highlight erlang"><table><tr><td class="code"><pre><code class="hljs erlang">使用值接收者实现接口:结构体类型和结构体指针类型的变量都能存.<br>使用指针接收者实现接口:只能存结构体指针类型的变量.<br></code></pre></td></tr></table></figure></li>
-<li>接口与类型的关系<ul>
-<li>多个类型可以实现同一个接口.</li>
-<li><strong>==一个类型可以实现多个接口==.</strong></li>
-<li><strong>==接口可以嵌套==.</strong><br>(看起来Go语言把java的继承和接口整合了)</li>
+            <ol>
+<li><p>架构图<br><img src="evernotecid://0D5675CA-E4CA-4A31-90D2-5714D6FC9A5F/appyinxiangcom/26441968/ENResource/p66" alt="43cfe968c185887432d12e88e376108b.png"></p>
+</li>
+<li><p>几个关键概念</p>
+<ul>
+<li>主观下线(Subjectively Down)：简称S_DOWN；</li>
+<li>客观下线(Objectively Down)：简称O_DOWN；</li>
+<li>quorum：确认odown的最少的哨兵数量；</li>
+<li>down-after-milliseconds：在该时间范围内没有相应pong，则认为master主观下线；</li>
+<li>PING命令和PONG命令：判断是否标记master为主观下线； </li>
+<li>INFO命令：获取主从关系变化，查看master的配置信息；</li>
+<li>majority：授权进行主从切换(failover)的最少的哨兵数量</li>
+<li>failover：故障迁移</li>
+<li>sentinel_hello：发布/订阅的频道，进行failover的sentinel会将新配置广播给其他的sentinel</li>
 </ul>
 </li>
-<li>多实现和嵌套Demo<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> brid <span class="hljs-keyword">interface</span> &#123;<br>    speaker<br>    eater<br>&#125;<br><br><span class="hljs-keyword">type</span> speaker <span class="hljs-keyword">interface</span> &#123;<br>    speak()<br>&#125;<br><br><span class="hljs-keyword">type</span> eater <span class="hljs-keyword">interface</span> &#123;<br>    eat(<span class="hljs-keyword">string</span>)<br>&#125;<br><br><span class="hljs-keyword">type</span> yingwu <span class="hljs-keyword">struct</span> &#123;<br><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(y yingwu)</span> <span class="hljs-title">speak</span><span class="hljs-params">()</span></span>  &#123;<br>    fmt.Println(<span class="hljs-string">&quot;叽叽喳喳&quot;</span>)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(y yingwu)</span> <span class="hljs-title">eat</span><span class="hljs-params">(s <span class="hljs-keyword">string</span>)</span></span>  &#123;<br>    fmt.Println(<span class="hljs-string">&quot;鹦鹉吃&quot;</span> + s)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>  &#123;<br>    <span class="hljs-keyword">var</span> a brid<br>    c := &amp;yingwu&#123;&#125;<br>    a=c<br>    a.eat(<span class="hljs-string">&quot;rice&quot;</span>)<br>    a.speak()<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>几个关键条件</p>
+<ul>
+<li>2个哨兵的majority=2，3个哨兵的majority=2，4个哨兵的majority=2，5个哨兵的majority=3)</li>
+<li>当quorum&lt;majority时，quorum确定odown，majority确定failover</li>
+<li>当quorum&gt;=majority时,quorum确定odown和failover</li>
+<li>sentinels的存活数一定要大于等于配置的quorum</li>
+</ul>
+</li>
+<li><p>Sentinel监视流程</p>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><code class="hljs crmsh">（<span class="hljs-number">1</span>）sentinel跟所有的instances建立连接（包括sentinels、<span class="hljs-literal">master</span>、<span class="hljs-literal">slave</span>）。<br>（<span class="hljs-number">2</span>）每个sentinel每秒向所有的instances发送ping命令，收到回应（pong，loading，masterdown）；如果在down-after-milliseconds没有得到回应，则标记sdown。<br>（<span class="hljs-number">3</span>）每个sentinel每<span class="hljs-number">10</span>秒向主从服务器发送<span class="hljs-literal">inf</span>o命令；(如果主被odown，则频率会变成每秒)。<br>（<span class="hljs-number">4</span>）如果认同sdown的sentinel数量达到quorum的值，则标记主为odown<br></code></pre></td></tr></table></figure></li>
+<li><p>服务发现：通过发布/订阅功能来实现的</p>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><code class="hljs armasm">（<span class="hljs-number">1</span>）主从都有自己的sentinel:hello频道<br>（<span class="hljs-number">2</span>）sentinel每<span class="hljs-number">2</span>秒向频道发送信息：sentinel的<span class="hljs-built_in">ip</span>地址，端口号，runid<br>（<span class="hljs-number">3</span>）在频道中发现新的sentinel信息，会将其更新到自己的sentinels列表中（会比较<span class="hljs-built_in">ip</span>，端口，runid来确定是更新还是新增）<br>（<span class="hljs-number">4</span>）sentinel还会发送完整的主服务器的配置，如果一个sentinel收到的配置版本更新，则立马升级到新配置<br></code></pre></td></tr></table></figure></li>
+<li><p>Sentinels领导者选举：一半以上的sentinel是同意</p>
+</li>
+<li><p>故障迁移（failover）</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><code class="hljs pgsql">（<span class="hljs-number">1</span>）对从服务器进行过滤，确认最终有效的可以参与被选举的从服务器列表<br>（<span class="hljs-number">2</span>）选出<span class="hljs-keyword">replication</span> <span class="hljs-keyword">offset</span>最大的从服务器作为新主服务器；如果<span class="hljs-keyword">replication</span> <span class="hljs-keyword">offset</span>相同，则选用runid最小的<br>（<span class="hljs-number">3</span>）向该从服务器发送SLAVEOF <span class="hljs-keyword">NO</span> ONE命令，让它变成新的主服务器<br>（<span class="hljs-number">4</span>）通过发布/订阅功能（sentinel:hello频道），让其他sentinel更新配置<br>（<span class="hljs-number">5</span>）向其他从服务器发送SLAVEOF 命令，让它们去复制新的主服务器<br></code></pre></td></tr></table></figure></li>
+<li><p>常见问题  </p>
+<ul>
+<li><p>（1）异步复制导致数据丢失：有可能部分还没来得及复制到slave就宕机了，此时这些部分数据就丢失了。</p>
+<p>（2）集群脑裂导致数据丢失：master所在机器突然脱离了正常的网络，跟其它slave机器不能连接，但是实际上master还运行着，此时可能会产生2个master；当网络恢复，旧master会变成slave，数据丢失。<br>解决方法：要求至少有一个slave，数据复制和同步的延迟不能超过10s；一旦超过1个，master就不会再接收任何请求了</p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-built_in">min</span>-slaves-<span class="hljs-built_in">to</span>-<span class="hljs-built_in">write</span> <span class="hljs-number">1</span><br><span class="hljs-built_in">min</span>-slaves-<span class="hljs-built_in">max</span>-lag <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure></li>
+<li><p>集群不可用：<br>（1）存活的sentinels &lt; quorum<br>（2）sentinel挂掉一半（？还在研究确认）</p>
+</li>
+</ul>
+</li>
 </ol>
 
         </div>
@@ -249,7 +276,7 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/07/16/Redis/Redis-Sentinel%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/"
+                           href="/2021/07/16/Redis/Redis%20Sentinel/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
@@ -265,10 +292,10 @@
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/05/25/go%E5%9F%BA%E7%A1%80/05%E7%BB%93%E6%9E%84%E4%BD%93/"
+                           href="/2021/07/16/go%E5%9F%BA%E7%A1%80/06%E6%8E%A5%E5%8F%A3/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Go-struct</span>
+                                <span class="post-nav-title-item">Go-interface</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
