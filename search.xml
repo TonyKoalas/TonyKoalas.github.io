@@ -169,36 +169,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis Sentinel-哨兵模式</title>
-    <url>/2021/07/16/Redis/Redis%20Sentinel/</url>
-    <content><![CDATA[<ol>
-<li>架构图<br>1master 2 slaves<br>3sentinels</li>
-<li>主观下线(Subjectively Down简称S_DOWN)</li>
-<li>客观下线(Objectively Down简称O_DOWN)</li>
-<li>quorum：确认odown的最少的哨兵数量</li>
-<li>majority：授权进行主从切换(failover)的最少的哨兵数量<ul>
-<li>   2个哨兵的majority=2，3个哨兵的majority=2，4个哨兵的majority=2，5个哨兵的majority=3)</li>
-<li>   当quorum&lt;majority时，quorum确定odown，majority确定failover</li>
-<li>   当quorum&gt;=majority时,quorum确定odown和failover</li>
-<li>   sentinels的存活数一定要大于等于配置的quorum</li>
-</ul>
-</li>
-<li>故障迁移（failover）</li>
-<li>哨兵模式无法工作的情况：<ul>
-<li>sentinel无法选举出master: 要满足sentinels的存活数大于等于配置的quorum</li>
-<li>master，slave都down了</li>
-</ul>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Go-interface</title>
     <url>/2021/07/16/go%E5%9F%BA%E7%A1%80/06%E6%8E%A5%E5%8F%A3/</url>
     <content><![CDATA[<img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fb57c9724cf9167764d0eaf2abc402031.png&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623949493&t=362c1a0f03eb1f6eee0a66d2076fe3fe" width="400px" height="150px" style="box-shadow: 0 0 0px">
@@ -228,7 +198,7 @@
     <title>Redis Sentinel-哨兵模式</title>
     <url>/2021/07/16/Redis/Redis-Sentinel%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<ol>
-<li><p>架构图<br><img src="evernotecid://0D5675CA-E4CA-4A31-90D2-5714D6FC9A5F/appyinxiangcom/26441968/ENResource/p66" alt="43cfe968c185887432d12e88e376108b.png"></p>
+<li><p>架构图<br>![/images/RedisSentinels.jpg]</p>
 </li>
 <li><p>几个关键概念</p>
 <ul>
