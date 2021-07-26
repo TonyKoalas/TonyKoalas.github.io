@@ -236,7 +236,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis-哨兵模式</title>
+    <title>Redis-初识</title>
     <url>/2021/07/26/Redis/Redis-%E5%88%9D%E8%AF%86/</url>
     <content><![CDATA[<ol>
 <li><p>Redis的IO多路复用</p>
@@ -247,7 +247,12 @@
 </ul>
 <img src="/images/Redis.jpg"></li>
 </ol>
-<p><code>参考：https://www.cnblogs.com/mumage/p/12832766.html https://www.cnblogs.com/reecelin/p/13538382.html https://www.cnblogs.com/reecelin/p/13537734.html</code></p>
+<p>参考：</p>
+<ul>
+<li><a class="link"   href="https://www.cnblogs.com/mumage/p/12832766.html" >https://www.cnblogs.com/mumage/p/12832766.html<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   href="https://www.cnblogs.com/reecelin/p/13538382.html" >https://www.cnblogs.com/reecelin/p/13538382.html<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   href="https://www.cnblogs.com/reecelin/p/13537734.html" >https://www.cnblogs.com/reecelin/p/13537734.html<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
 ]]></content>
       <categories>
         <category>Redis</category>
