@@ -224,24 +224,26 @@
 
         <div class="article-content markdown-body">
             <h4 id="Kafka集群架构"><a href="#Kafka集群架构" class="headerlink" title="Kafka集群架构"></a>Kafka集群架构</h4><img src="/images/kafka.jpg">
-`备注：从2.8版本开始，可使用Kafka内部的Quorum控制器来取代ZooKeeper`
-<img src="/images/zookeeper.jpg">
-#### Kafka在系统中的作用
-  * 模块间解耦
-  * 冗余：可以将数据持久化保留一段时间
-  * 扩展性：水平扩展（增加服务器数量），垂直扩展（增加topic，partition等等）
-  * 灵活性，峰值处理能力
-  * 恢复性:部分模块暂时性挂掉，不会影响其他系统工作；一旦模块恢复，可继续对队列中的消息进行处理
-  * 顺序保证：一个partition内的消息的有序性
-  * 缓冲，异步操作
-  
-#### 关键概念
-  * ISR(In Sync Replica):“不丢消息”机制
-  * ack机制:producer的消息发送确认机制
-  * rebalance
-  * controller:kafka集群中一个节点，用来进行leader election以及各种failover
-  * Deliver guarantee：消息传递保障
 
+<p><code>备注：从2.8版本开始，可使用Kafka内部的Quorum控制器来取代ZooKeeper</code></p>
+<img src="/images/zookeeper.jpg">
+
+<h4 id="Kafka在系统中的作用"><a href="#Kafka在系统中的作用" class="headerlink" title="Kafka在系统中的作用"></a>Kafka在系统中的作用</h4><ul>
+<li>模块间解耦</li>
+<li>冗余：可以将数据持久化保留一段时间</li>
+<li>扩展性：水平扩展（增加服务器数量），垂直扩展（增加topic，partition等等）</li>
+<li>灵活性，峰值处理能力</li>
+<li>恢复性:部分模块暂时性挂掉，不会影响其他系统工作；一旦模块恢复，可继续对队列中的消息进行处理</li>
+<li>顺序保证：一个partition内的消息的有序性</li>
+<li>缓冲，异步操作</li>
+</ul>
+<h4 id="关键概念"><a href="#关键概念" class="headerlink" title="关键概念"></a>关键概念</h4><ul>
+<li>ISR(In Sync Replica):“不丢消息”机制</li>
+<li>ack机制:producer的消息发送确认机制</li>
+<li>rebalance</li>
+<li>controller:kafka集群中一个节点，用来进行leader election以及各种failover</li>
+<li>Deliver guarantee：消息传递保障</li>
+</ul>
 <h4 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h4><ol>
 <li>写入方式<br>producer发布消息到broker，消息会被append到对应的partition中，每个partition对应一个append.log文件，每一条message会被追加到log文件的尾部，在文件中的位置称做offset。message写入属于顺序写磁盘（<strong>顺序写磁盘效率比随机写内存还要高</strong>），这也是kafka的高吞吐率的保证</li>
 <li>业务流程</li>
@@ -286,10 +288,12 @@
 <li>Coordinator</li>
 </ol>
 <ul>
-<li>Group Coordinator是用来存储group的meta信息的，将对应partition的offset信息记录到kafka的topic(__consumer_offsets)，该topic的分区默认为50个</li>
+<li>Group Coordinator是用来存储group的meta信息，以及group的topic的partition的offset信息</li>
+<li>记录再kafka的topic(__consumer_offsets)，该topic的分区默认为50个</li>
 <li>每个broker上都会有一个Group Coordinator服务</li>
 <li>每个group如何选择一个Coordinator：<br>(1)根据groupid找到__consumer_offsets上对应的partition<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml">计算groupid的hash值,对<span class="hljs-number">50</span>取余得出<span class="hljs-number">0</span>-<span class="hljs-number">49</span>的值<br>partition-<span class="hljs-constructor">Id(<span class="hljs-params">__consumer_offsets</span>)</span> = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Math</span>.</span></span>abs(groupId.hash<span class="hljs-constructor">Code()</span> % groupMetadataTopicPartitionCount)<br></code></pre></td></tr></table></figure>
-(2)根据该partition的leader所对应的broker，即可确定Coordinator</li>
+(2)根据该partition的leader所对应的broker，即可确定Coordinator<img src="/images/coordinator.jpg">
+<img src="/images/coordinator2.jpg"></li>
 </ul>
 <p><code>https://www.cnblogs.com/xifenglou/p/7251112.html https://www.jianshu.com/p/46cb44c6b96c https://www.cnblogs.com/yoke/p/11405397.html </code></p>
 
@@ -430,7 +434,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Kafka集群架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Producer"><span class="nav-number">2.</span> <span class="nav-text">Producer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Rebalance"><span class="nav-number">3.</span> <span class="nav-text">Rebalance</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Kafka集群架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka%E5%9C%A8%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">Kafka在系统中的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">关键概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Producer"><span class="nav-number">4.</span> <span class="nav-text">Producer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Rebalance"><span class="nav-number">5.</span> <span class="nav-text">Rebalance</span></a></li></ol>
     </div>
 </div>
         </aside>
