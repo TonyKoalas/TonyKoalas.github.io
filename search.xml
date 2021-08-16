@@ -261,4 +261,84 @@
         <tag>Redis</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Kafka-初识</title>
+    <url>/2021/08/15/Kafka/Kafka-%E5%88%9D%E8%AF%86/</url>
+    <content><![CDATA[<h4 id="Kafka集群架构"><a href="#Kafka集群架构" class="headerlink" title="Kafka集群架构"></a>Kafka集群架构</h4><img src="/images/kafka.jpg">
+`备注：从2.8版本开始，可使用Kafka内部的Quorum控制器来取代ZooKeeper`
+<img src="/images/zookeeper.jpg">
+#### Kafka在系统中的作用
+  * 模块间解耦
+  * 冗余：可以将数据持久化保留一段时间
+  * 扩展性：水平扩展（增加服务器数量），垂直扩展（增加topic，partition等等）
+  * 灵活性，峰值处理能力
+  * 恢复性:部分模块暂时性挂掉，不会影响其他系统工作；一旦模块恢复，可继续对队列中的消息进行处理
+  * 顺序保证：一个partition内的消息的有序性
+  * 缓冲，异步操作
+  
+#### 关键概念
+  * ISR(In Sync Replica):“不丢消息”机制
+  * ack机制:producer的消息发送确认机制
+  * rebalance
+  * controller:kafka集群中一个节点，用来进行leader election以及各种failover
+  * Deliver guarantee：消息传递保障
+
+<h4 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h4><ol>
+<li>写入方式<br>producer发布消息到broker，消息会被append到对应的partition中，每个partition对应一个append.log文件，每一条message会被追加到log文件的尾部，在文件中的位置称做offset。message写入属于顺序写磁盘（<strong>顺序写磁盘效率比随机写内存还要高</strong>），这也是kafka的高吞吐率的保证</li>
+<li>业务流程</li>
+</ol>
+<ul>
+<li>异步处理：main thread发送给recored accumulator就返回，当缓冲队列达到一定条件就通过sender线程发送给broker。</li>
+<li><strong>可以指定partition；<br>可以通过key进行hash选一个partition；<br>如果partition和key都为null，轮询选出一个partition。</strong></li>
+<li>batch.size：控制缓存队列里batch的大小<br>acks：关乎高吞吐和持久性的参数，值可为0，-1，1<br>retries:重试机制</li>
+<li>一个batch只对应一个topic的一个partition；由于size限制，一个partiton可能有多个batch</li>
+<li>一个batch包括compressor压缩器，缓冲区，thunks（回调逻辑的集合）</li>
+<li>Sender线程轮询缓冲区，并把获取到的batch按照目标分区所在的broker进行分组，通过socket发送给broker<img src="/images/producer1.jpg"></li>
+</ul>
+<ol start="3">
+<li>时序图</li>
+</ol>
+<ul>
+<li>producer先从zookeeper的”/brokers/…/state”节点找到该partition的leader</li>
+<li>producer将消息发送给该leader</li>
+<li>leader将消息写入本地log</li>
+<li>followers从leader pull消息，写入本地log后向leader发送ACK</li>
+<li>leader 收到所有 ISR 中的 replica 的 ACK 后，增加 HW（high watermark，最后 commit 的 offset） 并向 producer 发送 ACK<img src="/images/producer2.jpg"></li>
+</ul>
+<h4 id="Rebalance"><a href="#Rebalance" class="headerlink" title="Rebalance"></a>Rebalance</h4><ol>
+<li>触发条件</li>
+</ol>
+<ul>
+<li>group成员数量变动</li>
+<li>订阅的topic个数发生变化</li>
+<li>订阅的topic的分区数发生变化</li>
+</ul>
+<ol start="2">
+<li>Rebalance过程</li>
+</ol>
+<ul>
+<li>Heartbeat:consumer和coordinator之间的心跳，心跳周期可配（默认10秒）</li>
+<li>JoinGroup:加入group，确定group leader</li>
+<li>SyncGroup:leader分配消费方案<img src="/images/rebalance1.jpg">
+<img src="/images/rebalance2.jpg">
+<figure class="highlight stylus"><table><tr><td class="code"><pre><code class="hljs stylus">特别注意：<br>max<span class="hljs-selector-class">.poll</span><span class="hljs-selector-class">.interval</span>.ms：Consumer两次调用 poll 方法的最大时间间隔，默认是<span class="hljs-number">5</span>minutes。<br>如果Consumer如果在<span class="hljs-number">5</span>分钟之内无法消费完 poll 方法返回消息，那么Consumer会主动发起 “离开组” 的请求，Coordinator 也会开启新一轮 Rebalance。<br></code></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li>Coordinator</li>
+</ol>
+<ul>
+<li>Group Coordinator是用来存储group的meta信息的，将对应partition的offset信息记录到kafka的topic(__consumer_offsets)，该topic的分区默认为50个</li>
+<li>每个broker上都会有一个Group Coordinator服务</li>
+<li>每个group如何选择一个Coordinator：<br>(1)根据groupid找到__consumer_offsets上对应的partition<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml">计算groupid的hash值,对<span class="hljs-number">50</span>取余得出<span class="hljs-number">0</span>-<span class="hljs-number">49</span>的值<br>partition-<span class="hljs-constructor">Id(<span class="hljs-params">__consumer_offsets</span>)</span> = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Math</span>.</span></span>abs(groupId.hash<span class="hljs-constructor">Code()</span> % groupMetadataTopicPartitionCount)<br></code></pre></td></tr></table></figure>
+(2)根据该partition的leader所对应的broker，即可确定Coordinator</li>
+</ul>
+<p><code>https://www.cnblogs.com/xifenglou/p/7251112.html https://www.jianshu.com/p/46cb44c6b96c https://www.cnblogs.com/yoke/p/11405397.html </code></p>
+]]></content>
+      <categories>
+        <category>Kafka</category>
+      </categories>
+      <tags>
+        <tag>Kafka</tag>
+      </tags>
+  </entry>
 </search>
