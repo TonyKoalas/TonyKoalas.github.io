@@ -266,6 +266,22 @@
 <li>followers从leader pull消息，写入本地log后向leader发送ACK</li>
 <li>leader 收到所有 ISR 中的 replica 的 ACK 后，增加 HW（high watermark，最后 commit 的 offset） 并向 producer 发送 ACK<img src="/images/producer2.jpg"></li>
 </ul>
+<h4 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h4><ol>
+<li>Consumer和Group的关系<br>一个Group可能有多个consumer</li>
+<li>Poll</li>
+</ol>
+<ul>
+<li>Consumer通过poll方法来消费kafka的数据</li>
+<li>poll方法发起fetch请求从kafka读取数据，max.partition.fetch.bytes决定每次读取的量，fetch到的数据会放在本地缓存中</li>
+<li>如果缓存中还有未被消费的数据，poll方法会优先获取缓存中的数据(size由max.poll.records决定)，待全部消费完才会发起下一次的fetch请求<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">sequenceDiagram<br>Consumer-&gt;&gt;本地缓存: 发起poll(),从缓存中fetch数据<br>本地缓存--&gt;&gt;kafka: 缓存没有数据，则发起sendFetches()<br>kafka--&gt;&gt;本地缓存: 返回数据<br>本地缓存--&gt;&gt;Consumer: 返回数据<br>Consumer-&gt;&gt;本地缓存: 发起poll,从缓存中fetch数据<br>本地缓存--&gt;&gt;Consumer: 缓存中有数据，返回数据<br></code></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li>commit offset</li>
+</ol>
+<ul>
+<li>enable.auto.commit：自动提交，手动提交</li>
+<li>auto.offset.reset：<br>earliest-重置到最早的offset<br>latest-重置到最新的offset</li>
+</ul>
 <h4 id="Rebalance"><a href="#Rebalance" class="headerlink" title="Rebalance"></a>Rebalance</h4><ol>
 <li>触发条件</li>
 </ol>
@@ -295,7 +311,7 @@
 (2)根据该partition的leader所对应的broker，即可确定Coordinator<img src="/images/coordinator.jpg">
 <img src="/images/coordinator2.jpg"></li>
 </ul>
-<p><code>https://www.cnblogs.com/xifenglou/p/7251112.html https://www.jianshu.com/p/46cb44c6b96c https://www.cnblogs.com/yoke/p/11405397.html </code></p>
+<p><code>https://www.cnblogs.com/xifenglou/p/7251112.html https://www.jianshu.com/p/46cb44c6b96c https://www.cnblogs.com/yoke/p/11405397.html https://blog.csdn.net/u012129558/article/details/80076327 </code></p>
 
         </div>
 
@@ -303,6 +319,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/08/31/Kafka/Kafka-%E5%8F%82%E6%95%B0/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Kafka-初识</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
@@ -434,7 +465,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Kafka集群架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka%E5%9C%A8%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">Kafka在系统中的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">关键概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Producer"><span class="nav-number">4.</span> <span class="nav-text">Producer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Rebalance"><span class="nav-number">5.</span> <span class="nav-text">Rebalance</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Kafka集群架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka%E5%9C%A8%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">Kafka在系统中的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">关键概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Producer"><span class="nav-number">4.</span> <span class="nav-text">Producer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Consumer"><span class="nav-number">5.</span> <span class="nav-text">Consumer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Rebalance"><span class="nav-number">6.</span> <span class="nav-text">Rebalance</span></a></li></ol>
     </div>
 </div>
         </aside>

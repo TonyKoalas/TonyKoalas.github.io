@@ -229,7 +229,7 @@
 <li><p>几个关键概念</p>
 <figure class="highlight crmsh"><table><tr><td class="code"><pre><code class="hljs crmsh">（<span class="hljs-number">1</span>）主观下线(Subjectively Down)：简称S_DOWN；<br>（<span class="hljs-number">2</span>）客观下线(Objectively Down)：简称O_DOWN；<br>（<span class="hljs-number">3</span>）quorum：确认odown的最少的哨兵数量；<br>（<span class="hljs-number">4</span>）down-after-milliseconds：在该时间范围内没有相应pong，则认为<span class="hljs-literal">master</span>主观下线；<br>（<span class="hljs-number">5</span>）PING命令和PONG命令：判断是否标记<span class="hljs-literal">master</span>为主观下线； <br>（<span class="hljs-number">6</span>）<span class="hljs-literal">INF</span>O命令：获取主从关系变化，查看<span class="hljs-literal">master</span>的配置信息；<br>（<span class="hljs-number">7</span>）majority：授权进行主从切换(failover)的最少的哨兵数量<br>（<span class="hljs-number">8</span>）failover：故障迁移<br>（<span class="hljs-number">9</span>）sentinel_hello：发布/订阅的频道，进行failover的sentinel会将新配置广播给其他的sentinel<br></code></pre></td></tr></table></figure></li>
 <li><p>几个关键条件</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><code class="hljs routeros">（1）2个哨兵的<span class="hljs-attribute">majority</span>=2，3个哨兵的majority=2，4个哨兵的majority=2，5个哨兵的majority=3)<br>（2）当quorum&lt;majority时，quorum确定odown，majority确定failover<br>（3）当quorum&gt;=majority时,quorum确定odown和failover<br>（4）sentinels的存活数一定要大于等于配置的quorum<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><code class="hljs routeros">（1）2个哨兵的<span class="hljs-attribute">majority</span>=2，3个哨兵的majority=2，4个哨兵的majority=3，5个哨兵的majority=3)<br>（2）当quorum&lt;majority时，quorum确定odown，majority确定failover<br>（3）当quorum&gt;=majority时,quorum确定odown和failover(?待测试)<br>（4）sentinels的存活数一定要大于等于配置的quorum<br></code></pre></td></tr></table></figure></li>
 <li><p>Sentinel监视流程</p>
 <figure class="highlight crmsh"><table><tr><td class="code"><pre><code class="hljs crmsh">（<span class="hljs-number">1</span>）sentinel跟所有的instances建立连接（包括sentinels、<span class="hljs-literal">master</span>、<span class="hljs-literal">slave</span>）。<br>（<span class="hljs-number">2</span>）每个sentinel每秒向所有的instances发送ping命令，收到回应（pong，loading，masterdown）；如果在down-after-milliseconds没有得到回应，则标记sdown。<br>（<span class="hljs-number">3</span>）每个sentinel每<span class="hljs-number">10</span>秒向主从服务器发送<span class="hljs-literal">inf</span>o命令；(如果主被odown，则频率会变成每秒)。<br>（<span class="hljs-number">4</span>）如果认同sdown的sentinel数量达到quorum的值，则标记主为odown<br></code></pre></td></tr></table></figure></li>
 <li><p>服务发现：通过发布/订阅功能来实现的</p>
@@ -249,7 +249,7 @@
 <p>(2) 集群不可用：</p>
 <ul>
 <li>存活的sentinels &lt; quorum</li>
-<li>sentinel挂掉一半（？还在研究确认）</li>
+<li>sentinel挂掉一半</li>
 </ul>
 </li>
 </ol>
