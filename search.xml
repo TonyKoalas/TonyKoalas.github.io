@@ -366,13 +366,21 @@
     <url>/2021/08/31/Kafka/Kafka-%E5%8F%82%E6%95%B0/</url>
     <content><![CDATA[<h4 id="关键Parameter说明"><a href="#关键Parameter说明" class="headerlink" title="关键Parameter说明"></a>关键Parameter说明</h4><h5 id="max-poll-interval-ms"><a href="#max-poll-interval-ms" class="headerlink" title="max.poll.interval.ms"></a>max.poll.interval.ms</h5><ol>
 <li>定义<br>表示最大的poll数据间隔</li>
-<li>影响<br><u><strong>如果超过这个间隔没有发起poll请求,该consumer会退出consumer group,Coordinator会开始rebalance</strong></u><h5 id="max-partition-fetch-bytes"><a href="#max-partition-fetch-bytes" class="headerlink" title="max.partition.fetch.bytes"></a>max.partition.fetch.bytes</h5></li>
+<li>影响<br><u><strong>如果超过这个间隔没有发起poll请求,该consumer会退出consumer group,Coordinator会开始rebalance</strong></u></li>
+</ol>
+<h5 id="max-partition-fetch-bytes"><a href="#max-partition-fetch-bytes" class="headerlink" title="max.partition.fetch.bytes"></a>max.partition.fetch.bytes</h5><ol>
 <li>定义<br>限制每次从kafka中fetch的record的大小,并放到本地缓存中</li>
-<li>影响<br>待缓存中的数据全被poll完才可进行下一次的fetch<h5 id="max-poll-records"><a href="#max-poll-records" class="headerlink" title="max.poll.records"></a>max.poll.records</h5></li>
+<li>影响<br>待缓存中的数据全被poll完才可进行下一次的fetch</li>
+</ol>
+<h5 id="max-poll-records"><a href="#max-poll-records" class="headerlink" title="max.poll.records"></a>max.poll.records</h5><ol>
 <li>定义<br>限制每次从缓存中poll出来的record数量</li>
-<li>影响<br>无<h5 id="heartbeat-interval-ms"><a href="#heartbeat-interval-ms" class="headerlink" title="heartbeat.interval.ms"></a>heartbeat.interval.ms</h5></li>
+<li>影响<br>无</li>
+</ol>
+<h5 id="heartbeat-interval-ms"><a href="#heartbeat-interval-ms" class="headerlink" title="heartbeat.interval.ms"></a>heartbeat.interval.ms</h5><ol>
 <li>定义<br>consumer与coordinator之间的心跳，默认3秒。<br>通常设定为session.timeout.ms的1/3</li>
-<li>影响<br>无<h5 id="session-timeout-ms"><a href="#session-timeout-ms" class="headerlink" title="session.timeout.ms"></a>session.timeout.ms</h5></li>
+<li>影响<br>无</li>
+</ol>
+<h5 id="session-timeout-ms"><a href="#session-timeout-ms" class="headerlink" title="session.timeout.ms"></a>session.timeout.ms</h5><ol>
 <li>定义<br>consumer session的过期时间，默认10秒</li>
 <li>影响<br>如果无心跳的时间超过session.timeout.ms</li>
 </ol>
