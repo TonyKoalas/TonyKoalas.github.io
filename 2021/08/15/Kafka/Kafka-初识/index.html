@@ -254,18 +254,24 @@
 <li>batch.size：控制缓存队列里batch的大小<br>acks：关乎高吞吐和持久性的参数，值可为0，-1，1<br>retries:重试机制</li>
 <li>一个batch只对应一个topic的一个partition；由于size限制，一个partiton可能有多个batch</li>
 <li>一个batch包括compressor压缩器，缓冲区，thunks（回调逻辑的集合）</li>
-<li>Sender线程轮询缓冲区，并把获取到的batch按照目标分区所在的broker进行分组，通过socket发送给broker<img src="/images/producer1.jpg"></li>
+<li>Sender线程轮询缓冲区，并把获取到的batch按照目标分区所在的broker进行分组，通过socket发送给broker</li>
+<li>一旦Sender线程接收到response将依次(按照消息发送顺序)调用batch中的回调方法</li>
+<li>KafkaProducer是线程安全的（可以所有线程共享一个KafkaProducer实例）</li>
 </ul>
-<ol start="3">
-<li>时序图</li>
-</ol>
-<ul>
-<li>producer先从zookeeper的”/brokers/…/state”节点找到该partition的leader</li>
-<li>producer将消息发送给该leader</li>
-<li>leader将消息写入本地log</li>
-<li>followers从leader pull消息，写入本地log后向leader发送ACK</li>
-<li>leader 收到所有 ISR 中的 replica 的 ACK 后，增加 HW（high watermark，最后 commit 的 offset） 并向 producer 发送 ACK<img src="/images/producer2.jpg"></li>
-</ul>
+<p><code>调优producer前我们就需要搞清楚性能瓶颈到底是在用户主线程还是在Sender线程</code></p>
+<img src="/images/producer1.jpg">
+3. 时序图
+* producer先从zookeeper的"/brokers/.../state"节点找到该partition的leader
+* producer将消息发送给该leader
+* leader将消息写入本地log
+* followers从leader pull消息，写入本地log后向leader发送ACK
+* leader 收到所有 ISR 中的 replica 的 ACK 后，增加 HW（high watermark，最后 commit 的 offset） 并向 producer 发送 ACK
+<img src="/images/producer2.jpg">
+4. ACKS
+* acks=0:只要把消息发送出去,就认为成功了
+* acks=1:默认值，partition leader 收到消息并落地，则认为成功
+* acks=-1(all):partiton leader收到消息并落地，ISR里的所有follower同步了消息，则认为成功
+
 <h4 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h4><ol>
 <li>Consumer和Group的关系<br>一个Group可能有多个consumer</li>
 <li>Poll</li>
@@ -273,7 +279,7 @@
 <ul>
 <li>Consumer通过poll方法来消费kafka的数据</li>
 <li>poll方法发起fetch请求从kafka读取数据，max.partition.fetch.bytes决定每次读取的量，fetch到的数据会放在本地缓存中</li>
-<li>如果缓存中还有未被消费的数据，poll方法会优先获取缓存中的数据(size由max.poll.records决定)，待全部消费完才会发起下一次的fetch请求<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">sequenceDiagram<br>Consumer-&gt;&gt;本地缓存: 发起poll(),从缓存中fetch数据<br>本地缓存--&gt;&gt;kafka: 缓存没有数据，则发起sendFetches()<br>kafka--&gt;&gt;本地缓存: 返回数据<br>本地缓存--&gt;&gt;Consumer: 返回数据<br>Consumer-&gt;&gt;本地缓存: 发起poll,从缓存中fetch数据<br>本地缓存--&gt;&gt;Consumer: 缓存中有数据，返回数据<br></code></pre></td></tr></table></figure></li>
+<li>如果缓存中还有未被消费的数据，poll方法会优先获取缓存中的数据(size由max.poll.records决定)，待全部消费完才会发起下一次的fetch请求<img src="/images/poll.jpg"></li>
 </ul>
 <ol start="3">
 <li>commit offset</li>
