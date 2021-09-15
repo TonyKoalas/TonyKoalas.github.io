@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/images/coordinator.jpg">
 <meta property="og:image" content="http://example.com/images/coordinator2.jpg">
 <meta property="article:published_time" content="2021-08-15T13:40:00.000Z">
-<meta property="article:modified_time" content="2021-09-03T08:51:03.863Z">
+<meta property="article:modified_time" content="2021-09-15T10:09:22.791Z">
 <meta property="article:author" content="tony">
 <meta property="article:tag" content="Kafka">
 <meta name="twitter:card" content="summary_large_images">
@@ -208,7 +208,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      2.7k 字
     </span>
   
 
@@ -217,7 +217,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      8 分钟
     </span>
   
 
@@ -330,7 +330,7 @@
 <li>JoinGroup:加入group，确定group leader</li>
 <li>SyncGroup:leader分配消费方案<img src="/images/rebalance1.jpg" srcset="/img/loading.gif" lazyload>
 <img src="/images/rebalance2.jpg" srcset="/img/loading.gif" lazyload>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><code class="hljs stylus">特别注意：<br>max<span class="hljs-selector-class">.poll</span><span class="hljs-selector-class">.interval</span>.ms：Consumer两次调用 poll 方法的最大时间间隔，默认是<span class="hljs-number">5</span>minutes。<br>如果Consumer如果在<span class="hljs-number">5</span>分钟之内无法消费完 poll 方法返回消息，那么Consumer会主动发起 “离开组” 的请求，Coordinator 也会开启新一轮 Rebalance。<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">特别注意：<br>max<span class="hljs-selector-class">.poll</span><span class="hljs-selector-class">.interval</span>.ms：Consumer两次调用 poll 方法的最大时间间隔，默认是<span class="hljs-number">5</span>minutes。<br>如果Consumer如果在<span class="hljs-number">5</span>分钟之内无法消费完 poll 方法返回消息，那么Consumer会主动发起 “离开组” 的请求，Coordinator 也会开启新一轮 Rebalance。<br></code></pre></td></tr></table></figure></li>
 </ul>
 <ol start="3">
 <li>Coordinator</li>
@@ -339,7 +339,7 @@
 <li>Group Coordinator是用来存储group的meta信息，以及group的topic的partition的offset信息</li>
 <li>记录再kafka的topic(__consumer_offsets)，该topic的分区默认为50个</li>
 <li>每个broker上都会有一个Group Coordinator服务</li>
-<li>每个group如何选择一个Coordinator：<br>(1)根据groupid找到__consumer_offsets上对应的partition<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml">计算groupid的hash值,对<span class="hljs-number">50</span>取余得出<span class="hljs-number">0</span>-<span class="hljs-number">49</span>的值<br>partition-<span class="hljs-constructor">Id(<span class="hljs-params">__consumer_offsets</span>)</span> = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Math</span>.</span></span>abs(groupId.hash<span class="hljs-constructor">Code()</span> % groupMetadataTopicPartitionCount)<br></code></pre></td></tr></table></figure>
+<li>每个group如何选择一个Coordinator：<br>(1)根据groupid找到__consumer_offsets上对应的partition<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">计算groupid的hash值,对<span class="hljs-number">50</span>取余得出<span class="hljs-number">0</span>-<span class="hljs-number">49</span>的值<br>partition-<span class="hljs-constructor">Id(<span class="hljs-params">__consumer_offsets</span>)</span> = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Math</span>.</span></span>abs(groupId.hash<span class="hljs-constructor">Code()</span> % groupMetadataTopicPartitionCount)<br></code></pre></td></tr></table></figure>
 (2)根据该partition的leader所对应的broker，即可确定Coordinator<img src="/images/coordinator.jpg" srcset="/img/loading.gif" lazyload>
 <img src="/images/coordinator2.jpg" srcset="/img/loading.gif" lazyload></li>
 </ul>
