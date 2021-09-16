@@ -337,11 +337,9 @@ Kafka在系统中的作用
           
             
           
-          
-Redis的IO多路复用
-
+          Redis的IO多路复用
 多路指的是多个网络连接（socket），复用指的是复用同一个线程处理数据
-IO多路复用程序会同时监听多个socket，当被监听的socket准备好执行accept、read、write、close等操作时，与这些操作相对应的文件事件就会产生。IO多路复用程序会把所有产生事件的socket压入一个队列中，然后有序地每次仅一个socket的方式传送给文件事件分派器，文件事
+IO多路复用程序会同时监听多个socket，当被监听的socket准备好执行accept、read、write、close等操作时，与这些操作相对应的文件事件就会产生。IO多路复用程序会把所有产生事件的socket压入一个队列中，然后有序地每次仅一个socket的方式传送给文件事件分派器，文件事件分
         </a>
       </p>
 
@@ -397,11 +395,9 @@ IO多路复用程序会同时监听多个socket，当被监听的socket准备好
           
             
           
-          
-架构图
-
-几个关键概念
-123456789（1）主观下线(Subjectively Down)：简称S_DOWN；（2）客观下线(Objectively Down)：简称O_DOWN；（3）quorum：确认odown的最少的哨兵数量；（4）down-after-milliseconds：在该时间范围内没有相应pong，则认为master主观下线；（5）PING命令和PONG命令：判断是否标记m
+          架构图   
+#### 几个关键概念
+   123456789（1）主观下线(Subjectively Down)：简称S_DOWN；（2）客观下线(Objectively Down)：简称O_DOWN；（3）quorum：确认odown的最少的哨兵数量；（4）down-after-milliseconds：在该时间范围内没有相应pong，则认为master主观下线；（5）PING命令和PONG命
         </a>
       </p>
 
