@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-09-15T10:09:43.321Z</updated>
+  <updated>2021-09-16T08:21:55.300Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="http://example.com/2021/08/31/Kafka/Kafka-%E5%8F%82%E6%95%B0/"/>
     <id>http://example.com/2021/08/31/Kafka/Kafka-%E5%8F%82%E6%95%B0/</id>
     <published>2021-08-31T01:32:00.000Z</published>
-    <updated>2021-09-15T10:09:43.321Z</updated>
+    <updated>2021-09-16T08:21:55.300Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="关键Parameter说明"><a href="#关键Parameter说明" class="headerlink" title="关键Parameter说明"></a>关键Parameter说明</h4><h5 id="max-poll-interval-ms"><a href="#max-poll-interval-ms" class="headerlink" title="max.poll.interval.ms"></a>max.poll.interval.ms</h5><ol><li>定义<br>表示最大的poll数据间隔</li><li>影响<br><u><strong>如果超过这个间隔没有发起poll请求,该consumer会退出consumer group,Coordinator会开始rebalance</strong></u></li></ol><h5 id="max-partition-fetch-bytes"><a href="#max-partition-fetch-bytes" class="headerlink" title="max.partition.fetch.bytes"></a>max.partition.fetch.bytes</h5><ol><li>定义<br>限制每次从kafka中fetch的record的大小,并放到本地缓存中</li><li>影响<br>待缓存中的数据全被poll完才可进行下一次的fetch</li></ol><h5 id="max-poll-records"><a href="#max-poll-records" class="headerlink" title="max.poll.records"></a>max.poll.records</h5><ol><li>定义<br>限制每次从缓存中poll出来的record数量</li><li>影响<br>无</li></ol><h5 id="heartbeat-interval-ms"><a href="#heartbeat-interval-ms" class="headerlink" title="heartbeat.interval.ms"></a>heartbeat.interval.ms</h5><ol><li>定义<br>consumer与coordinator之间的心跳，默认3秒。<br>通常设定为session.timeout.ms的1/3</li><li>影响<br>无</li></ol><h5 id="session-timeout-ms"><a href="#session-timeout-ms" class="headerlink" title="session.timeout.ms"></a>session.timeout.ms</h5><ol><li>定义<br>consumer session的过期时间，默认10秒</li><li>影响<br>如果无心跳的时间超过session.timeout.ms</li></ol>]]></content>
+    <content type="html"><![CDATA[<h4 id="Consumer-Parameter说明"><a href="#Consumer-Parameter说明" class="headerlink" title="Consumer Parameter说明"></a>Consumer Parameter说明</h4><h5 id="max-poll-interval-ms"><a href="#max-poll-interval-ms" class="headerlink" title="max.poll.interval.ms"></a>max.poll.interval.ms</h5><ol><li>定义<br>表示最大的poll数据间隔</li><li>影响<br><u><strong>如果超过这个间隔没有发起poll请求,该consumer会退出consumer group,Coordinator会开始rebalance</strong></u></li></ol><h5 id="max-partition-fetch-bytes"><a href="#max-partition-fetch-bytes" class="headerlink" title="max.partition.fetch.bytes"></a>max.partition.fetch.bytes</h5><ol><li>定义<br>限制每次从kafka中fetch的record的大小,并放到本地缓存中</li><li>影响<br>待缓存中的数据全被poll完才可进行下一次的fetch</li></ol><h5 id="max-poll-records"><a href="#max-poll-records" class="headerlink" title="max.poll.records"></a>max.poll.records</h5><ol><li>定义<br>限制每次从缓存中poll出来的record数量</li><li>影响<br>无</li></ol><h5 id="heartbeat-interval-ms"><a href="#heartbeat-interval-ms" class="headerlink" title="heartbeat.interval.ms"></a>heartbeat.interval.ms</h5><ol><li>定义<br>consumer与coordinator之间的心跳，默认3秒。<br>通常设定为session.timeout.ms的1/3</li><li>影响<br>无</li></ol><h5 id="session-timeout-ms"><a href="#session-timeout-ms" class="headerlink" title="session.timeout.ms"></a>session.timeout.ms</h5><ol><li>定义<br>consumer session的过期时间，默认10秒</li><li>影响<br>如果无心跳的时间超过session.timeout.ms</li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;h4 id=&quot;关键Parameter说明&quot;&gt;&lt;a href=&quot;#关键Parameter说明&quot; class=&quot;headerlink&quot; title=&quot;关键Parameter说明&quot;&gt;&lt;/a&gt;关键Parameter说明&lt;/h4&gt;&lt;h5 id=&quot;max-poll-interval-ms&quot;</summary>
+    <summary type="html">&lt;h4 id=&quot;Consumer-Parameter说明&quot;&gt;&lt;a href=&quot;#Consumer-Parameter说明&quot; class=&quot;headerlink&quot; title=&quot;Consumer Parameter说明&quot;&gt;&lt;/a&gt;Consumer Parameter说明&lt;/h4&gt;&lt;</summary>
       
     
     
@@ -71,9 +71,9 @@
     <link href="http://example.com/2021/07/26/Redis/Redis-%E5%88%9D%E8%AF%86/"/>
     <id>http://example.com/2021/07/26/Redis/Redis-%E5%88%9D%E8%AF%86/</id>
     <published>2021-07-26T04:54:36.000Z</published>
-    <updated>2021-09-16T03:07:39.703Z</updated>
+    <updated>2021-09-16T08:24:03.984Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="Redis的IO多路复用"><a href="#Redis的IO多路复用" class="headerlink" title="Redis的IO多路复用"></a>Redis的IO多路复用</h4><ul><li>多路指的是多个网络连接（socket），复用指的是复用同一个线程处理数据</li><li>IO多路复用程序会同时监听多个socket，当被监听的socket准备好执行accept、read、write、close等操作时，与这些操作相对应的文件事件就会产生。IO多路复用程序会把所有产生事件的socket压入一个队列中，然后有序地每次仅一个socket的方式传送给文件事件分派器，文件事件分派器接收到socket之后会根据socket产生的事件类型调用对应的事件处理器进行处理。</li><li><strong>Redis的多线程部分只是用来处理网络数据的读写和协议解析，执行命令仍然是单线程顺序执行</strong></li></ul>   <img src="/images/Redis.jpg"><p>参考：</p><ul><li><a href="https://www.cnblogs.com/mumage/p/12832766.html">https://www.cnblogs.com/mumage/p/12832766.html</a></li><li><a href="https://www.cnblogs.com/reecelin/p/13538382.html">https://www.cnblogs.com/reecelin/p/13538382.html</a></li><li><a href="https://www.cnblogs.com/reecelin/p/13537734.html">https://www.cnblogs.com/reecelin/p/13537734.html</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<h4 id="Redis的IO多路复用"><a href="#Redis的IO多路复用" class="headerlink" title="Redis的IO多路复用"></a>Redis的IO多路复用</h4><ul><li>多路指的是多个网络连接（socket），复用指的是复用同一个线程处理数据</li><li>IO多路复用程序会同时监听多个socket，当被监听的socket准备好执行accept、read、write、close等操作时，与这些操作相对应的文件事件就会产生。IO多路复用程序会把所有产生事件的socket压入一个队列中，然后有序地每次仅一个socket的方式传送给文件事件分派器，文件事件分派器接收到socket之后会根据socket产生的事件类型调用对应的事件处理器进行处理。</li><li><strong>Redis的多线程部分只是用来处理网络数据的读写和协议解析，执行命令仍然是单线程顺序执行</strong></li></ul>   <img src="/images/Redis.jpg"><h4 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h4><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a href="https://www.cnblogs.com/mumage/p/12832766.html">https://www.cnblogs.com/mumage/p/12832766.html</a><a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a href="https://www.cnblogs.com/reecelin/p/13538382.html">https://www.cnblogs.com/reecelin/p/13538382.html</a><a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a href="https://www.cnblogs.com/reecelin/p/13537734.html">https://www.cnblogs.com/reecelin/p/13537734.html</a><a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>]]></content>
     
     
       
